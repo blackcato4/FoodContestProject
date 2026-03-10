@@ -1,0 +1,8 @@
+﻿Intragram Photos/
+Questionaire Images/
+Test Images/
+*.keras
+*.h5
+__pycache__/
+.ipynb_checkpoints/
+main.exe
