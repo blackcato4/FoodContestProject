@@ -7,3 +7,4 @@ __pycache__/
 .ipynb_checkpoints/
 main.exe
 FoodContestCode.py
+test_result_ready_to_submit.csv

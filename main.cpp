@@ -3,14 +3,21 @@
 #include <string>
 #include <fstream>
 #include <sstream>
-#include <iomanip>
-#include <ctime>
+
+// ต้องประกาศบรรทัดนี้ก่อน include stb_image.h เพื่อให้ใช้งานฟังก์ชันโหลดภาพได้
+#define STB_IMAGE_IMPLEMENTATION
+#include "stb_image.h"
+#include "siamese_network.h"
 
 using namespace std;
 
 int main() {
-    srand(time(0));
     cout << "\n--- Food Contest: C++ Version ---" << endl;
+    
+    // 1. จำลองการโหลดโมเดล AI
+    SiameseNetwork model;
+    model.build();
+
     cout << "Step 1: Loading test.csv..." << endl;
 
     ifstream testFile("test.csv");
@@ -33,7 +40,10 @@ int main() {
         string img1, img2;
         getline(ss, img1, ',');
         getline(ss, img2, ',');
-        int winner = (rand() % 2) + 1;
+
+        // 2. ให้โมเดลอ่านภาพและตัดสินใจ (ห้ามใช้ rand() แล้ว!)
+        int winner = model.predict(img1, img2);
+        
         outFile << img1 << "," << img2 << "," << winner << endl;
         count++;
     }
@@ -41,10 +51,10 @@ int main() {
     testFile.close();
     outFile.close();
 
-    cout << "Step 2: Training & Prediction Completed." << endl;
+    cout << "Step 2: Prediction Completed." << endl;
     cout << "SUCCESS: Processed " << count << " rows." << endl;
     cout << "Result saved to: test_result_ready_to_submit.csv" << endl;
-    cout << "\nMISSION ACCOMPLISHED! Go to sleep now, Phakbung! :)" << endl;
+    cout << "\nMISSION ACCOMPLISHED! Good luck tomorrow!" << endl;
 
     return 0;
 }
